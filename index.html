@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Choose Your Adventure</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      text-align: center;
+      margin: 50px;
+    }
+    #story {
+      margin-bottom: 20px;
+    }
+    #choices {
+      display: flex;
+      justify-content: center;
+    }
+    button {
+      margin: 0 10px;
+      padding: 10px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="story">Welcome, brave adventurer! You find yourself at the entrance of a dark cave. What will you do?</div>
+  <div id="choices">
+    <button onclick="choosePath(1)">Enter the cave</button>
+    <button onclick="choosePath(2)">Look for another path</button>
+  </div>
+
+  <script>
+    let currentPath = 0;
+
+    function updateStory(text) {
+      document.getElementById('story').innerText = text;
+    }
+
+    function updateChoices(choices) {
+      const choicesContainer = document.getElementById('choices');
+      choicesContainer.innerHTML = '';
+
+      choices.forEach((choice, index) => {
+        const button = document.createElement('button');
+        button.innerText = choice.text;
+        button.onclick = () => choosePath(index);
+        choicesContainer.appendChild(button);
+      });
+    }
+
+    function choosePath(choiceIndex) {
+      currentPath = choiceIndex;
+
+      switch (currentPath) {
+        case 0:
+          updateStory("You enter the cave and find a mysterious portal. Do you go through it?");
+          updateChoices([{ text: "Yes", nextPath: 1 }, { text: "No", nextPath: 2 }]);
+          break;
+        case 1:
+          updateStory("You find yourself in a magical realm. A friendly wizard offers to help you on your quest. Do you accept?");
+          updateChoices([{ text: "Accept", nextPath: 3 }, { text: "Decline", nextPath: 4 }]);
+          break;
+        case 2:
+          updateStory("As you search for another path, you encounter a fierce dragon. What do you do?");
+          updateChoices([{ text: "Fight the dragon", nextPath: 5 }, { text: "Try to sneak past", nextPath: 6 }]);
+          break;
+        case 3:
+          updateStory("The wizard grants you a powerful weapon. You continue your journey with newfound strength.");
+          updateChoices([]);
+          break;
+        case 4:
+          updateStory("You decline the wizard's offer and continue your journey alone.");
+          updateChoices([]);
+          break;
+        case 5:
+          updateStory("You bravely engage in combat with the dragon, but it's too powerful. Game over!");
+          updateChoices([]);
+          break;
+        case 6:
+          updateStory("You successfully sneak past the dragon. You continue your adventure.");
+          updateChoices([]);
+          break;
+        default:
+          break;
+      }
+    }
+
+    // Initial setup
+    choosePath(0);
+  </script>
+
+</body>
+</html>
